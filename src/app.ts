@@ -5,6 +5,12 @@ import functionLoadData from "./data/data";
 import swaggerUI from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
 
+// Favicon Setup
+
+import favicon from "serve-favicon";
+
+import path from "path";
+
 // CORS
 
 import cors from "cors";
@@ -29,6 +35,8 @@ const app = express();
 app.use(express.json());
 
 app.use(morgan("tiny"));
+
+app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 
 // CORS Setup
 const corsOption = {
@@ -64,7 +72,7 @@ const options = {
     openapi: "1.0.0",
     info: {
       title: "Poki API",
-      version: "1.0.0",
+      version: "3.0.0",
       description:
         "All the Pokémon data you'll ever need in one place, easily accessible through a modern RESTful API.",
     },
