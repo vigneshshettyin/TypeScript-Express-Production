@@ -2,7 +2,7 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 
 const getFacultyData = async () => {
-  const url = `https://scholar.google.com/citations?hl=en&user=ktZlyEoAAAAJ`;
+  const url = `https://scholar.google.com/citations?hl=en&user=UErW458AAAAJYU`;
   const response = await axios.get(url);
   const $ = cheerio.load(response.data);
   //   const hindex = $("#gsc_rsb_st").text();
