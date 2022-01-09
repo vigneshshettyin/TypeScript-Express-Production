@@ -4,12 +4,55 @@ import functionLoadData from "./data/data";
 // Swagger Imports
 import swaggerUI from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
+
+// CORS
+
+import cors from "cors";
+
+// Server Rate Limiting
+
+import rateLimit from "express-rate-limit";
+
+// API Cache
+
+import apicache from "apicache";
+
+// Server Status
+
+import morgan from "morgan";
+
 const app = express();
 // pscale connect tsc-db-test dev --execute 'yarn dev'
 
 // Express configuration
 
 app.use(express.json());
+
+app.use(morgan("tiny"));
+
+// CORS Setup
+const corsOption = {
+  credentials: true,
+  origin: ["http://localhost:3000", "http://localhost:8000"],
+};
+app.use(cors(corsOption));
+
+// Cache Setup
+
+let cache = apicache.middleware;
+
+app.use(cache("5 minutes"));
+
+// Rate Limiter Setup
+
+// Create the rate limit rule
+const apiRequestLimiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 60, // limit each IP to 2 requests per windowMs
+});
+
+// Use the limit rule as an application middleware
+app.use(apiRequestLimiter);
 
 // PORT SETUP
 const port = process.env.PORT || 3000;
